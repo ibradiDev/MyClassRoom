@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "10944934338",
+    "project_id": "my-classr00m",
+    "storage_bucket": "my-classr00m.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10944934338:android:e8ed0faceb19953b86e65b",
+        "android_client_info": {
+          "package_name": "ibradi.classroom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEqg67EeiszSF-xslaFvMlkf3foBuoOgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
