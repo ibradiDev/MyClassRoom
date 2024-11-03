@@ -1,6 +1,8 @@
 package ibradi.classroom.components.teacher
 
 import MenuItemCard
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,10 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Class
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.FolderSpecial
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,22 +28,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
+import ibradi.classroom.AuthActivity
 import ibradi.classroom.ui.theme.MyClassRoomTheme
 import kotlinx.coroutines.launch
 
 @Preview
 @Composable
 fun TeacherHomeScreen() {
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    val auth = FirebaseAuth.getInstance()
+
     MyClassRoomTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            val coroutineScope = rememberCoroutineScope()
-            val auth = FirebaseAuth.getInstance()
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -55,6 +62,18 @@ fun TeacherHomeScreen() {
                         text = "Espace enseignant",
                         textAlign = TextAlign.Justify,
                         style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+
+                Spacer(Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Dr Jonson",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
 
@@ -91,18 +110,27 @@ fun TeacherHomeScreen() {
                 Spacer(Modifier.height(28.dp))
 
                 // Logout Button
-                Row(
-                    modifier = Modifier
-                        .clickable {
-                            coroutineScope.launch {
+                Row(modifier = Modifier
+                    .clickable {
+                        coroutineScope.launch {
+                            try {
                                 auth.signOut()
+                                val intent = Intent(context, AuthActivity::class.java)
+                                context.startActivity(intent, null)
+
+                            } catch (err: Exception) {
+                                Toast
+                                    .makeText(
+                                        context, err.message, Toast.LENGTH_SHORT
+                                    )
+                                    .show()
                             }
                         }
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+
+                    }
+                    .padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Logout,
+                        imageVector = Icons.AutoMirrored.Filled.Logout,
                         contentDescription = "Logout Icon",
                         modifier = Modifier.size(24.dp)
                     )

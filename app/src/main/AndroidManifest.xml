@@ -13,12 +13,17 @@
         android:theme="@style/Theme.MyClassRoom"
         tools:targetApi="31">
         <activity
-            android:name=".ui.AuthActivity"
+            android:name=".TeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AuthActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.MyClassRoom">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

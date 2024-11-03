@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DIALOG" />
-        <DropdownSelection timestamp="2024-10-06T20:30:50.221509Z">
+        <DropdownSelection timestamp="2024-11-03T19:32:01.258570Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=CA9XFUTGZ94559EM" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/macbookprom1/.android/avd/Pixel_3_API_24.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -30,6 +30,12 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="StudentHomeScreen">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="AuthActivity">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="StudentActivity">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

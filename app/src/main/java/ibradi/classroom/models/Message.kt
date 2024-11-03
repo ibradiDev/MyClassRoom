@@ -1,16 +1,16 @@
 package ibradi.classroom.models
 
 import com.google.firebase.Timestamp
+import kotlinx.serialization.Serializable
 
-class Message {
-    constructor(id: String, sender: String, body: String) {
-        this.id = id
-        this.author = sender
-        this.body = body
-    }
+@Serializable
+data class Message(
+    val author: User = User(),
+    val body: String = "",
+    val timestamp: String = Timestamp.now().toString(),
+    var direction: MsgDirection = MsgDirection.INCOMING
+)
 
-    lateinit var id: String
-    lateinit var author: String
-    lateinit var body: String
-    lateinit var timestamp: Timestamp
+enum class MsgDirection {
+    INCOMING, OUTGOING
 }

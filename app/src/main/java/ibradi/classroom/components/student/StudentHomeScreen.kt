@@ -29,23 +29,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.google.firebase.auth.FirebaseAuth
+import ibradi.classroom.models.User
 import ibradi.classroom.ui.theme.MyClassRoomTheme
 import kotlinx.coroutines.launch
 
-@Preview
 @Composable
-fun StudentHomeScreen() {
+fun StudentHomeScreen(currentUser: User, navController: NavHostController) {
     val context = LocalContext.current
+
+    val auth = FirebaseAuth.getInstance()
 
     MyClassRoomTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
             val coroutineScope = rememberCoroutineScope()
-            val auth = FirebaseAuth.getInstance()
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -53,8 +54,7 @@ fun StudentHomeScreen() {
                 verticalArrangement = Arrangement.Center
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
                         text = "Espace étudiant",
@@ -66,11 +66,22 @@ fun StudentHomeScreen() {
                 Spacer(Modifier.height(8.dp))
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = "M2 SIGL",
+                        text = currentUser.studyField,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+
+                Spacer(Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = currentUser.lastName + " " + currentUser.firstName,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleMedium
                     )
@@ -80,65 +91,54 @@ fun StudentHomeScreen() {
 
                 // First row of options
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
                 ) {
-                    MenuItemCard(
-                        title = "MESSAGES",
+
+                    MenuItemCard(title = "MESSAGERIE",
                         icon = Icons.Default.MarkUnreadChatAlt,
-                        modifier = Modifier.clickable { /* TODO: Action to go to messages */ }
-                    )
+                        modifier = Modifier.clickable {
+                            navController.navigate("chats")
+                        })
 
                     Spacer(modifier = Modifier.width(12.dp))
 
-                    MenuItemCard(
-                        title = "ESPACE EVALUATIONS",
+                    MenuItemCard(title = "PROGRAMME EVALUATIONS",
                         icon = Icons.Default.School,
-                        modifier = Modifier.clickable { /* TODO: Action to go to evaluations */ }
-                    )
+                        modifier = Modifier.clickable { })
                 }
 
                 Spacer(Modifier.height(28.dp))
 
-                // Second row of options
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center
                 ) {
-                    MenuItemCard(
-                        title = "RESSOURCES",
+                    MenuItemCard(title = "RESSOURCES",
                         icon = Icons.Default.FolderSpecial,
-                        modifier = Modifier.clickable { /* TODO: Action to go to resources */ }
-                    )
+                        modifier = Modifier.clickable { })
 
                     Spacer(modifier = Modifier.width(12.dp))
 
-                    MenuItemCard(
-                        title = "EMPLOI DU TEMPS",
+                    MenuItemCard(title = "EMPLOI DU TEMPS",
                         icon = Icons.Default.Event,
-                        modifier = Modifier.clickable { /* TODO: Action to go to schedule */ }
-                    )
+                        modifier = Modifier.clickable { })
                 }
 
                 Spacer(Modifier.height(48.dp))
 
                 // Logout Button
-                Row(
-                    modifier = Modifier
-                        .clickable {
-                            coroutineScope.launch {
-                                try {
-                                    auth.signOut()
-                                } catch (err: Exception) {
-                                    Toast
-                                        .makeText(context, err.message, Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                Row(modifier = Modifier
+                    .clickable {
+                        coroutineScope.launch {
+                            try {
+                                auth.signOut()
+                            } catch (err: Exception) {
+                                Toast
+                                    .makeText(context, err.message, Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
-                        .padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                    }
+                    .padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Logout,
                         contentDescription = "Logout Icon",

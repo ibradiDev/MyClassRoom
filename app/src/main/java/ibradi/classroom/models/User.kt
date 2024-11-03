@@ -1,49 +1,21 @@
 package ibradi.classroom.models
 
+import kotlinx.serialization.Serializable
+
 enum class Profile { STUDENT, TEACHER }
+enum class TITLE { Dr, Prof, AssocProf, Associate, Assistant }
 
-class User {
-    constructor(
-        uid: String,
-        firstName: String,
-        lastName: String,
-        email: String,
-        password: String,
-        profileImage: String,
-        profile: Profile,
-    ) {
-        this.uid = uid
-        this.firstName = firstName
-        this.lastName = lastName
-        this.email = email
-        this.profile = profile
-        this.profileImage = profileImage
-        this.password = password
-    }
-
-    constructor(
-        firstName: String,
-        lastName: String,
-        email: String,
-        password: String,
-        profileImage: String,
-        profile: Profile,
-    ) {
-        this.firstName = firstName
-        this.lastName = lastName
-        this.email = email
-        this.profile = profile
-        this.profileImage = profileImage
-        this.password = password
-    }
-
-    lateinit var uid: String
-    lateinit var firstName: String
-    lateinit var lastName: String
-    lateinit var email: String
-    var profile: Profile = Profile.STUDENT
-    lateinit var profileImage: String
-    lateinit var password: String
-
-
-}
+@Serializable
+data class User(
+    var uid: String = "",
+    var firstName: String = "",
+    var lastName: String = "",
+    var email: String = "",
+    var profileImage: String = "",
+    var password: String = "",
+    var profile: Profile = Profile.STUDENT,
+    var title: String = "",
+    var studyField: String = "",
+    var grade: String = "",
+    var immat: String = "",
+)
